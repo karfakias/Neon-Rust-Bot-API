@@ -26,9 +26,9 @@ module.exports = {
         reconnectIntervalMs: process.env.RPP_RECONNECT_INTERVAL || 15000,
     },
     discord: {
-        username: process.env.RPP_DISCORD_USERNAME || '',
-        clientId: process.env.RPP_DISCORD_CLIENT_ID || '',
-        token: process.env.RPP_DISCORD_TOKEN || '',
+        username: process.env.RPP_DISCORD_USERNAME || 'Test Bot',
+        clientId: process.env.RPP_DISCORD_CLIENT_ID || '1379490676978483361',
+        token: process.env.RPP_DISCORD_TOKEN || 'MTM3OTQ5MDY3Njk3ODQ4MzM2MQ.G4rQQi.ANTbXEPb5Ol-bQYn5RVIyGpE-XVjmC3N1mIO-o',
         needAdminPrivileges: process.env.RPP_NEED_ADMIN_PRIVILEGES || true, /* If true, only admins can delete (server, switch..), manage credentials and reset a channel */
     }
 };
