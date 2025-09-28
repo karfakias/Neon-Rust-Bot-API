@@ -524,6 +524,25 @@ module.exports = {
         await Client.client.interactionReply(interaction, content);
     },
 
+    sendSettingsPhoneNumberMessage: async function (guildId, interaction = null) {
+        const instance = Client.client.getInstance(guildId);
+
+        const content = {
+            embeds: [DiscordEmbeds.getSettingsPhoneNumberEmbed(guildId)],
+            components: [DiscordButtons.getPhoneNumberButton(guildId)]
+        };
+
+        const message = await module.exports.sendMessage(guildId, content,
+            instance.settingsMessageId && instance.settingsMessageId.phoneNumber ? instance.settingsMessageId.phoneNumber : null,
+            instance.channelId.settings, interaction);
+
+        if (!interaction) {
+            instance.settingsMessageId = instance.settingsMessageId || {};
+            instance.settingsMessageId.phoneNumber = message.id;
+            Client.client.setInstance(guildId, instance);
+        }
+    },
+
     sendCctvMessage: async function (interaction, monument, cctvCodes, dynamic) {
         const content = {
             embeds: [DiscordEmbeds.getCctvEmbed(interaction.guildId, monument, cctvCodes, dynamic)],

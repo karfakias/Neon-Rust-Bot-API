@@ -425,6 +425,10 @@ module.exports = async (client, interaction) => {
             components: DiscordButtons.getSubscribeToChangesBattlemetricsButtons(guildId)
         });
     }
+    else if (interaction.customId === 'EditPhoneNumber') {
+        const modal = DiscordModals.getPhoneNumberModal(guildId);
+        await interaction.showModal(modal);
+    }
     else if (interaction.customId.startsWith('ServerConnect')) {
         const ids = JSON.parse(interaction.customId.replace('ServerConnect', ''));
         const server = instance.serverList[ids.serverId];

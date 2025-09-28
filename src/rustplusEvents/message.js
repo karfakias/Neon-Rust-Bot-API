@@ -25,6 +25,7 @@ const InGameChatHandler = require('../handlers/inGameChatHandler.js');
 const SmartSwitchGroupHandler = require('../handlers/smartSwitchGroupHandler.js');
 const TeamChatHandler = require("../handlers/teamChatHandler.js");
 const TeamHandler = require('../handlers/teamHandler.js');
+const AlarmForwarder = require('../util/alarmForwarder.js');
 
 module.exports = {
     name: 'message',
@@ -176,7 +177,8 @@ async function messageBroadcastEntityChangedSmartAlarm(rustplus, client, message
 
     if (!server || (server && !server.alarms[entityId])) return;
 
-    const active = message.broadcast.entityChanged.payload.value;
+    const active = Boolean(message.broadcast.entityChanged.payload.value);
+    const prevActive = Boolean(server.alarms[entityId].active);
     server.alarms[entityId].active = active;
     server.alarms[entityId].reachable = true;
     client.setInstance(rustplus.guildId, instance);
@@ -189,6 +191,11 @@ async function messageBroadcastEntityChangedSmartAlarm(rustplus, client, message
         if (instance.generalSettings.smartAlarmNotifyInGame) {
             rustplus.sendInGameMessage(`${server.alarms[entityId].name}: ${server.alarms[entityId].message}`);
         }
+    }
+
+    // forward on transition false -> true
+    if (!prevActive && active) {
+        AlarmForwarder.sendForward(instance, serverId, entityId, server.alarms[entityId]).catch(() => {});
     }
 
     DiscordMessages.sendSmartAlarmMessage(rustplus.guildId, rustplus.serverId, entityId);

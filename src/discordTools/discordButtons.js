@@ -564,4 +564,16 @@ module.exports = {
                     style: instance.generalSettings.battlemetricsGlobalLogout ? SUCCESS : DANGER
                 }))];
     },
+
+    getPhoneNumberButton: function (guildId) {
+        const instance = Client.client.getInstance(guildId);
+
+        return new Discord.ActionRowBuilder().addComponents(
+            module.exports.getButton({
+                customId: 'EditPhoneNumber',
+                label: instance.phoneNumber && instance.phoneNumber !== '' ? instance.phoneNumber : Client.client.intlGet(guildId, 'notSetCap', {}),
+                style: PRIMARY
+            })
+        );
+    },
 }

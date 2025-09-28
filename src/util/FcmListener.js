@@ -31,6 +31,7 @@ const DiscordTools = require('../discordTools/discordTools.js');
 const InstanceUtils = require('../util/instanceUtils.js');
 const Map = require('../util/map.js');
 const Scrape = require('../util/scrape.js');
+const AlarmForwarder = require('../util/alarmForwarder.js');
 
 module.exports = async (client, guild) => {
     const credentials = InstanceUtils.readCredentialsFile(guild.id);
@@ -363,7 +364,15 @@ async function pairingEntitySmartAlarm(client, guild, title, message, body) {
         }
 
         if (instance.serverList[serverId].alarms[body.entityId].reachable) {
-            instance.serverList[serverId].alarms[body.entityId].active = info.entityInfo.payload.value;
+            const prevActive = Boolean(instance.serverList[serverId].alarms[body.entityId].active);
+            const newActive = Boolean(info.entityInfo.payload.value);
+            instance.serverList[serverId].alarms[body.entityId].active = newActive;
+
+            // If it transitioned from false -> true, forward
+            if (!prevActive && newActive) {
+                AlarmForwarder.sendForward(instance, serverId, body.entityId,
+                    instance.serverList[serverId].alarms[body.entityId]).catch(() => {});
+            }
         }
         client.setInstance(guild.id, instance);
     }

@@ -1211,6 +1211,14 @@ module.exports = {
         return embed;
     },
 
+    getSettingsPhoneNumberEmbed: function (guildId) {
+        return module.exports.getEmbed({
+            color: Constants.COLOR_SETTINGS,
+            title: Client.client.intlGet(guildId, 'phoneNumberSetting'),
+            description: Client.client.intlGet(guildId, 'phoneNumberSettingDesc')
+        });
+    },
+
     getItemEmbed: function (guildId, itemName, itemId, type) {
         const title = `${itemName} (${itemId})`;
 

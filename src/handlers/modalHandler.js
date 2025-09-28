@@ -391,6 +391,26 @@ module.exports = async (client, interaction) => {
         await DiscordMessages.sendTrackerMessage(interaction.guildId, ids.trackerId);
     }
 
+    else if (interaction.customId === 'EditPhoneNumber') {
+        const phoneNumber = interaction.fields.getTextInputValue('PhoneNumber');
+
+        instance.phoneNumber = phoneNumber;
+        client.setInstance(guildId, instance);
+
+        client.log(client.intlGet(null, 'infoCap'), client.intlGet(null, 'modalValueChange', {
+            id: `${verifyId}`,
+            value: `${phoneNumber}`
+        }));
+
+        /* Update the settings menu message for phone number if present */
+        try {
+            await DiscordMessages.sendSettingsPhoneNumberMessage(guildId);
+        }
+        catch (e) {
+            // ignore if function not implemented or fails
+        }
+    }
+
     client.log(client.intlGet(null, 'infoCap'), client.intlGet(null, 'userModalInteractionSuccess', {
         id: `${verifyId}`
     }));

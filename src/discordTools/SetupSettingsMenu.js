@@ -24,6 +24,7 @@ const Path = require('path');
 const Constants = require('../util/constants.js');
 const DiscordButtons = require('./discordButtons.js');
 const DiscordEmbeds = require('./discordEmbeds.js');
+const DiscordMessages = require('./discordMessages.js');
 const DiscordSelectMenus = require('./discordSelectMenus.js');
 const DiscordTools = require('./discordTools.js');
 
@@ -42,6 +43,9 @@ module.exports = async (client, guild, forced = false) => {
 
         await setupGeneralSettings(client, guild.id, channel);
         await setupNotificationSettings(client, guild.id, channel);
+
+        /* Phone number setting */
+        await DiscordMessages.sendSettingsPhoneNumberMessage(guild.id);
 
         instance.firstTime = false;
         client.setInstance(guild.id, instance);

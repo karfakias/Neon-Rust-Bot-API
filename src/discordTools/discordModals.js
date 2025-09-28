@@ -344,4 +344,26 @@ module.exports = {
 
         return modal;
     },
+
+    getPhoneNumberModal(guildId) {
+        const instance = Client.client.getInstance(guildId);
+
+        const modal = module.exports.getModal({
+            customId: `EditPhoneNumber`,
+            title: Client.client.intlGet(guildId, 'editPhoneNumber')
+        });
+
+        modal.addComponents(
+            new Discord.ActionRowBuilder().addComponents(TextInput.getTextInput({
+                customId: 'PhoneNumber',
+                label: Client.client.intlGet(guildId, 'phoneNumberLabel'),
+                value: instance.phoneNumber ? instance.phoneNumber : '',
+                style: Discord.TextInputStyle.Short,
+                required: false,
+                minLength: 0
+            }))
+        );
+
+        return modal;
+    },
 }
