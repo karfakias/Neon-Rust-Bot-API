@@ -27,8 +27,8 @@ module.exports = {
     },
     discord: {
         username: process.env.RPP_DISCORD_USERNAME || 'Rust++ Hosted by NeonHost.Shop',
-        clientId: process.env.RPP_DISCORD_CLIENT_ID || '1379490676978483361',
-        token: process.env.RPP_DISCORD_TOKEN || 'MTM3OTQ5MDY3Njk3ODQ4MzM2MQ.Gnx0nF.d743Y1pyWEuU0z5xZNr2NL5NUBxCt5HBpOxSEo',
+        clientId: process.env.RPP_DISCORD_CLIENT_ID || '',
+        token: process.env.RPP_DISCORD_TOKEN || '',
         needAdminPrivileges: process.env.RPP_NEED_ADMIN_PRIVILEGES || true, /* If true, only admins can delete (server, switch..), manage credentials and reset a channel */
     }
     ,
