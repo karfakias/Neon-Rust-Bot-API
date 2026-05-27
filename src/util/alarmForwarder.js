@@ -23,6 +23,12 @@ function resolveWebhook(instance, serverId, alarm) {
 
 async function sendForward(instance, serverId, alarmId, alarm) {
     try {
+        // honor per-instance "forward only this alarm id" setting
+        if (instance && instance.alarmForwardOnlyId) {
+            if (instance.alarmForwardOnlyId !== alarmId) {
+                return false;
+            }
+        }
         const webhook = resolveWebhook(instance, serverId, alarm);
         if (!webhook) return false;
 

@@ -1219,6 +1219,20 @@ module.exports = {
         });
     },
 
+    getSettingsAlarmForwardOnlyEmbed: function (guildId) {
+        const instance = Client.client.getInstance(guildId);
+
+        return module.exports.getEmbed({
+            color: Constants.COLOR_SETTINGS,
+            title: Client.client.intlGet(guildId, 'alarmForwardOnlySetting'),
+            description: Client.client.intlGet(guildId, 'alarmForwardOnlySettingDesc'),
+            fields: [{
+                name: Client.client.intlGet(guildId, 'alarmForwardOnlyLabel'),
+                value: instance.alarmForwardOnlyId ? `${instance.alarmForwardOnlyId}` : Client.client.intlGet(guildId, 'notSetCap')
+            }]
+        });
+    },
+
     getItemEmbed: function (guildId, itemName, itemId, type) {
         const title = `${itemName} (${itemId})`;
 

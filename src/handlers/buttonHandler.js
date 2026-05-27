@@ -429,6 +429,10 @@ module.exports = async (client, interaction) => {
         const modal = DiscordModals.getPhoneNumberModal(guildId);
         await interaction.showModal(modal);
     }
+    else if (interaction.customId === 'EditAlarmForwardOnly') {
+        const modal = DiscordModals.getAlarmForwardOnlyModal(guildId);
+        await interaction.showModal(modal);
+    }
     else if (interaction.customId.startsWith('ServerConnect')) {
         const ids = JSON.parse(interaction.customId.replace('ServerConnect', ''));
         const server = instance.serverList[ids.serverId];

@@ -576,4 +576,15 @@ module.exports = {
             })
         );
     },
+    getAlarmForwardOnlyButton: function (guildId) {
+        const instance = Client.client.getInstance(guildId);
+
+        return new Discord.ActionRowBuilder().addComponents(
+            module.exports.getButton({
+                customId: 'EditAlarmForwardOnly',
+                label: instance.alarmForwardOnlyId && instance.alarmForwardOnlyId !== '' ? instance.alarmForwardOnlyId : Client.client.intlGet(guildId, 'notSetCap', {}),
+                style: PRIMARY
+            })
+        );
+    },
 }

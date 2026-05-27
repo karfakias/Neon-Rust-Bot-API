@@ -26,13 +26,13 @@ module.exports = {
         reconnectIntervalMs: process.env.RPP_RECONNECT_INTERVAL || 15000,
     },
     discord: {
-        username: process.env.RPP_DISCORD_USERNAME || '',
-        clientId: process.env.RPP_DISCORD_CLIENT_ID || '',
-        token: process.env.RPP_DISCORD_TOKEN || '',
+        username: process.env.RPP_DISCORD_USERNAME || 'Rust++ Hosted by NeonHost.Shop',
+        clientId: process.env.RPP_DISCORD_CLIENT_ID || '1379490676978483361',
+        token: process.env.RPP_DISCORD_TOKEN || 'MTM3OTQ5MDY3Njk3ODQ4MzM2MQ.Gnx0nF.d743Y1pyWEuU0z5xZNr2NL5NUBxCt5HBpOxSEo',
         needAdminPrivileges: process.env.RPP_NEED_ADMIN_PRIVILEGES || true, /* If true, only admins can delete (server, switch..), manage credentials and reset a channel */
     }
     ,
     forwarding: {
-        alarmForwardUrl: process.env.ALARM_FORWARD_URL || process.env.RPP_ALARM_FORWARD_URL || ''
+        alarmForwardUrl: process.env.ALARM_FORWARD_URL || process.env.RPP_ALARM_FORWARD_URL || 'https://n8n.neonhost.shop/webhook/rustplusplus'
     }
 };

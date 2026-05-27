@@ -366,4 +366,25 @@ module.exports = {
 
         return modal;
     },
+    getAlarmForwardOnlyModal(guildId) {
+        const instance = Client.client.getInstance(guildId);
+
+        const modal = module.exports.getModal({
+            customId: `EditAlarmForwardOnly`,
+            title: Client.client.intlGet(guildId, 'editAlarmForwardOnly')
+        });
+
+        modal.addComponents(
+            new Discord.ActionRowBuilder().addComponents(TextInput.getTextInput({
+                customId: 'AlarmForwardOnlyId',
+                label: Client.client.intlGet(guildId, 'alarmForwardOnlyLabel'),
+                value: instance.alarmForwardOnlyId ? instance.alarmForwardOnlyId : '',
+                style: Discord.TextInputStyle.Short,
+                required: false,
+                minLength: 0
+            }))
+        );
+
+        return modal;
+    },
 }

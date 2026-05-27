@@ -543,6 +543,25 @@ module.exports = {
         }
     },
 
+    sendSettingsAlarmForwardOnlyMessage: async function (guildId, interaction = null) {
+        const instance = Client.client.getInstance(guildId);
+
+        const content = {
+            embeds: [DiscordEmbeds.getSettingsAlarmForwardOnlyEmbed(guildId)],
+            components: [DiscordButtons.getAlarmForwardOnlyButton(guildId)]
+        };
+
+        const message = await module.exports.sendMessage(guildId, content,
+            instance.settingsMessageId && instance.settingsMessageId.alarmForwardOnly ? instance.settingsMessageId.alarmForwardOnly : null,
+            instance.channelId.settings, interaction);
+
+        if (!interaction) {
+            instance.settingsMessageId = instance.settingsMessageId || {};
+            instance.settingsMessageId.alarmForwardOnly = message.id;
+            Client.client.setInstance(guildId, instance);
+        }
+    },
+
     sendCctvMessage: async function (interaction, monument, cctvCodes, dynamic) {
         const content = {
             embeds: [DiscordEmbeds.getCctvEmbed(interaction.guildId, monument, cctvCodes, dynamic)],

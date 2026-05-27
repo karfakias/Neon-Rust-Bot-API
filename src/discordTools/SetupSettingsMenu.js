@@ -46,6 +46,12 @@ module.exports = async (client, guild, forced = false) => {
 
         /* Phone number setting */
         await DiscordMessages.sendSettingsPhoneNumberMessage(guild.id);
+            try {
+                await DiscordMessages.sendSettingsAlarmForwardOnlyMessage(guild.id);
+            }
+            catch (e) {
+                // ignore if function missing
+            }
 
         instance.firstTime = false;
         client.setInstance(guild.id, instance);

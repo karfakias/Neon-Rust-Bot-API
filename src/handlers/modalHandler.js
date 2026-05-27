@@ -393,7 +393,6 @@ module.exports = async (client, interaction) => {
 
     else if (interaction.customId === 'EditPhoneNumber') {
         const phoneNumber = interaction.fields.getTextInputValue('PhoneNumber');
-
         instance.phoneNumber = phoneNumber;
         client.setInstance(guildId, instance);
 
@@ -408,6 +407,39 @@ module.exports = async (client, interaction) => {
         }
         catch (e) {
             // ignore if function not implemented or fails
+        }
+    }
+    else if (interaction.customId === 'EditAlarmForwardOnly') {
+        const val = interaction.fields.getTextInputValue('AlarmForwardOnlyId').trim();
+
+        /* allow empty to clear */
+        if (val === '') {
+            instance.alarmForwardOnlyId = null;
+        }
+        else {
+            /* basic validation: non-empty string, max length 128 chars */
+            if (val.length > 128) {
+                await Client.client.interactionEditReply(interaction, {
+                    content: Client.client.intlGet(guildId, 'alarmForwardOnlyInvalid'),
+                    ephemeral: true
+                });
+                return;
+            }
+            instance.alarmForwardOnlyId = val;
+        }
+
+        client.setInstance(guildId, instance);
+
+        client.log(client.intlGet(null, 'infoCap'), client.intlGet(null, 'modalValueChange', {
+            id: `${verifyId}`,
+            value: `${instance.alarmForwardOnlyId}`
+        }));
+
+        try {
+            await DiscordMessages.sendSettingsAlarmForwardOnlyMessage(guildId);
+        }
+        catch (e) {
+            // ignore
         }
     }
 
